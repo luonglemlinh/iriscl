@@ -1,0 +1,38 @@
+!pip install kagglehub streamlit pandas matplotlib seaborn
+
+import kagglehub
+from kagglehub import KaggleDatasetAdapter
+import pandas as pd
+import streamlit as st
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+file_path = "Iris.csv" 
+df = kagglehub.load_dataset(
+    KaggleDatasetAdapter.PANDAS,
+    "uciml/iris",
+    file_path
+)
+
+
+st.title("Ứng dụng Phân tích Bộ dữ liệu Iris")
+
+
+st.subheader("Dữ liệu Iris")
+st.write(df.head())
+
+
+st.subheader("Biểu đồ phân tán")
+fig, ax = plt.subplots()
+# Use actual column names from the DataFrame
+sns.scatterplot(x=df["SepalLengthCm"], y=df["SepalWidthCm"], hue=df["Species"], palette="viridis", ax=ax)  
+st.pyplot(fig)
+
+
+st.subheader("Thống kê dữ liệu")
+st.write(df.describe())
+
+
+if __name__ == "__main__":
+    st.write("Code đã sẵn sàng để chạy trên Streamlit Cloud!")
